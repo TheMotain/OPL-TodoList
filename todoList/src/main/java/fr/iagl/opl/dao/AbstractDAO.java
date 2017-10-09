@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDAO<T extends Serializable,PK extends Serializable> {
 	
+	@SuppressWarnings("rawtypes")
 	private final Class persistentClass;
 
-	@SuppressWarnings("unchecked")
-
+	@SuppressWarnings("rawtypes")
 	public AbstractDAO() {
 		this.persistentClass = (Class) ((ParameterizedType) this.getClass().getGenericSuperclass())
 				.getActualTypeArguments()[1];
