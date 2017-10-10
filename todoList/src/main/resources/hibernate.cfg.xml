@@ -5,15 +5,15 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.username">admin</property>
-        <property name="hibernate.connection.password">admin</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://172.28.2.225:5432/todolist</property>
+<!--         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property> -->
+<!--         <property name="hibernate.connection.username">admin</property> -->
+<!--         <property name="hibernate.connection.password">admin</property> -->
+<!--         <property name="hibernate.connection.url">jdbc:postgresql://172.28.2.225:5432/todolist</property> -->
 
-        <property name="connection_pool_size">1</property>
-        <property name="hbm2ddl.auto">create</property>
-        <property name="show_sql">true</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
 
-       <mapping class="org.javabrains.sanjaya.dto.UserDetails"/>
+       <mapping class="fr.iagl.opl.entity.ListEntity"/>
+<!--        <mapping class="fr.iagl.opl.entity.pk.ListPK"/> -->
     </session-factory>
 </hibernate-configuration>

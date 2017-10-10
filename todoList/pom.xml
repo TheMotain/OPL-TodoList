@@ -12,10 +12,10 @@
 		<!-- Versions dependencies -->
 		<spring.version>4.1.9.RELEASE</spring.version>
 		<hibernate.version>4.1.4.Final</hibernate.version>
-		<junit.version>3.8.1</junit.version>
+		<junit.version>4.4</junit.version>
 		<cucumber.version>1.2.5</cucumber.version>
 		<jstl.version>1.2</jstl.version>
-		<sqlite.version>3.7.2</sqlite.version>
+		<postgresql.version>42.1.4</postgresql.version>
 	</properties>
 
 	<dependencies>
@@ -27,6 +27,23 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Spring -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+		    <version>${spring.version}</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<!-- DBUnit -->
+		<dependency>
+		    <groupId>org.dbunit</groupId>
+		    <artifactId>dbunit</artifactId>
+		    <version>2.4.9</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<!-- Cucumber -->
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-java</artifactId>
@@ -37,7 +54,7 @@
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-junit</artifactId>
-			<version>1.2.5</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -79,19 +96,19 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>${postgresql.version}</version>
+		</dependency>
+		
+		
 		<!-- JSTL dependency -->
 		<dependency>
 		    <groupId>jstl</groupId>
 		    <artifactId>jstl</artifactId>
 		    <version>${jstl.version}</version>
 		</dependency>
-		
-		<!-- SQLite JDBC dependency -->
-		<dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>${sqlite.version}</version>
-        </dependency>
 	</dependencies>
 
 	<build>

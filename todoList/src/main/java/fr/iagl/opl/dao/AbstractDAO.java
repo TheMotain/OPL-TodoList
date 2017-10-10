@@ -8,7 +8,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class AbstractDAO<T extends Serializable,PK extends Serializable> {
+public abstract class AbstractDAO<T extends Serializable,PK extends Serializable> implements DAOInterface<T,PK> {
+
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	@SuppressWarnings("rawtypes")
 	private final Class persistentClass;
@@ -19,22 +22,22 @@ public abstract class AbstractDAO<T extends Serializable,PK extends Serializable
 				.getActualTypeArguments()[1];
 	}
 
-	@Autowired
-	private SessionFactory sessionFactory;
-
 	protected Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public T getByKey(PK key) {
 		return (T) getSession().get(persistentClass, key);
 	}
 
+	@Override
 	public void persist(T entity) {
 		getSession().persist(entity);
 	}
 
+	@Override
 	public void delete(T entity) {
 		getSession().delete(entity);
 	}

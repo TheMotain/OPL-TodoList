@@ -1,5 +1,8 @@
 package fr.iagl.opl.dao;
 
-public interface ListDAO {
+import fr.iagl.opl.entity.ListEntity;
+import fr.iagl.opl.entity.pk.ListPK;
+
+public interface ListDAO extends DAOInterface<ListEntity, ListPK> {
 
 }
