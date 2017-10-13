@@ -1,12 +1,14 @@
 package fr.iagl.opl;
 
-import org.junit.runner.RunWith;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationContextLoader;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
-
-@RunWith(Cucumber.class)
-@CucumberOptions(features = "classpath:cucumber/", glue = "fr/iagl/opl/steps")
+//@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringBootWebApplication.class, loader = SpringApplicationContextLoader.class)
+@WebAppConfiguration
+@IntegrationTest
 public class SpringIntegrationTest {
 
 }

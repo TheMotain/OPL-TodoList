@@ -1,11 +1,22 @@
 package fr.iagl.opl.steps;
 
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import fr.iagl.opl.SpringBootWebApplication;
+import fr.iagl.opl.SpringIntegrationTest;
 
-public class TodoListeStep {
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(classes = SpringBootWebApplication.class, loader = ConfigFileApplicationContextInitializer.class)
+//@WebAppConfiguration
+public class TodoListeStep extends SpringIntegrationTest {
 	@Given("^La TODO liste work(\\d+) existe$")
 	public void la_TODO_liste_work_existe(int arg1) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
