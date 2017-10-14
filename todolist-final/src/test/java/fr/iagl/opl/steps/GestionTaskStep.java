@@ -20,7 +20,7 @@ import junit.framework.Assert;
 
 @RunWith(Cucumber.class)
 public class GestionTaskStep extends SpringIntegrationTest{
-	
+/*	
 	private Task taskEntity;
 	
 	private String cuurentTask;
@@ -136,4 +136,6 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
+	
+*/
 }

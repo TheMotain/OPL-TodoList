@@ -105,7 +105,7 @@ public class TodoListeStep extends SpringIntegrationTest {
 
 	@When("^Je clique sur le bouton supprimer de la TODO Liste (\\w+)$")
 	public void je_clique_sur_le_bouton_supprimer_de_la_TODO_Liste_todel(String arg1) throws Throwable {
-		res = controller.supprimer("/delete/" + arg1, model);
+		res = controller.supprimer(arg1, model);
 	}
 
 	@Then("^La TODO liste (\\w+) est supprimee$")

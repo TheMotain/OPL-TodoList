@@ -11,10 +11,6 @@ public class TaskController {
 	@Autowired
 	private TaskRepository taskRepository;
 
-	public TaskRepository getTaskRepository() {
-		return taskRepository;
-	}
-
 	public void setTaskRepository(TaskRepository taskRepository) {
 		this.taskRepository = taskRepository;
 	}

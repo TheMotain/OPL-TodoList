@@ -19,8 +19,8 @@ Feature: Gestion TODO List
     And Je suis redirige vers la liste des todolists
     
     Examples: 
-      | name   |
-      | todel1 |
+      | name  |
+      | todel |
 
   @tag3
   Scenario Outline: Creation d une TODO Liste

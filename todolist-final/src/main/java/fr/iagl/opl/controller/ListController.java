@@ -38,10 +38,6 @@ public class ListController {
 		return "errorListNotExists";
 	}
 
-	public ListRepository getListRepository() {
-		return listRepository;
-	}
-
 	public void setListRepository(ListRepository listRepository) {
 		this.listRepository = listRepository;
 	}
