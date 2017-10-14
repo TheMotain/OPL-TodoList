@@ -3,6 +3,7 @@ package fr.iagl.opl.steps;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
@@ -57,10 +58,10 @@ public class TodoListeStep extends SpringIntegrationTest {
 
 	@When("^Valide la creation$")
 	public void valide_la_creation() throws Throwable {
-		res = controller.createList(listEntity, this.model);
+		res = controller.createList(listEntity, Mockito.anyObject(), this.model);
 	}
 	
-	@Then("^Une erreur est affichee work existe deja$")
+	@Then("^Je suis redirige sur la page erreur work existe deja$")
 	public void une_erreur_est_affichee_work_existe_deja() throws Throwable {
 		Assert.assertEquals("errorListAlreadyExists", res);
 	}
@@ -80,5 +81,20 @@ public class TodoListeStep extends SpringIntegrationTest {
 		listEntity = listRepository.findByName("work"+arg);
 		Assert.assertNotNull(listEntity);
 		Assert.assertEquals("work"+arg, listEntity.getName());
+	}
+	
+	@Given("^Je veux creer une TODO liste avec le nom redirection$")
+	public void je_veux_creer_une_TODO_liste_avec_le_nom_redirection() throws Throwable {
+		this.currentList = "redirection";
+	}
+
+	@Given("^La TODO liste redirection n'existe pas$")
+	public void la_TODO_liste_redirection_n_existe_pas() throws Throwable {
+		Assert.assertNull(listRepository.findByName("redirection"));
+	}
+
+	@Then("^Je suis redirige vers la liste des todolists$")
+	public void je_suis_redirige_vers_la_liste_des_todolists() throws Throwable {
+		Assert.assertEquals("todolists", res);
 	}
 }
