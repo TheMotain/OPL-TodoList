@@ -1,5 +1,8 @@
 package fr.iagl.opl.controller;
 
+import javax.websocket.server.PathParam;
+
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +27,15 @@ public class ListController {
 			return "todolists";
 		}
 		return "errorListAlreadyExists";
+	}
+	
+	@RequestMapping(value = "/delete/{name}", method = RequestMethod.GET)
+	public String supprimer(@PathParam("name") String name, ModelMap model) {
+		if(null != listRepository.findByName(name)){
+			listRepository.delete(name);
+			return "todolists";
+		}
+		return "errorListNotExists";
 	}
 
 	public ListRepository getListRepository() {

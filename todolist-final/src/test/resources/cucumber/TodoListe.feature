@@ -11,11 +11,16 @@ Feature: Gestion TODO List
     Then Je suis redirige sur la page erreur work existe deja
 
   @tag2
-  Scenario Outline: Suppression d une TODO Liste
-    Given La TODO liste <name> existe
-    And Je veux supprimer la TODO liste <name>
+  Scenario Outline: Suppression d'une TODO Liste
+    Given Je veux supprimer la TODO liste avec le nom <name>
+    And La TODO liste <name> existe
     When Je clique sur le bouton supprimer de la TODO Liste <name>
-    Then La TODO liste est supprimee
+    Then La TODO liste <name> est supprimee
+    And Je suis redirige vers la liste des todolists
+    
+    Examples: 
+      | name   |
+      | todel1 |
 
   @tag3
   Scenario Outline: Creation d une TODO Liste

@@ -64,4 +64,37 @@ public class ListControllerTest extends SpringIntegrationTest {
 		String result = controller.createList(entity, Mockito.mock(BindingResult.class), (ModelMap) Mockito.mock(ModelMap.class));
 		Assert.assertEquals("todolists", result);
 	}
+	
+	@Test
+	public void callDeleteEntityTest(){
+		String entity = "entity";
+		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(new List());
+		controller.supprimer(entity, Mockito.mock(ModelMap.class));
+		Mockito.verify(listRepository,Mockito.times(1)).delete(entity);
+	}
+	
+	@Test
+	public void notCallDeleteEntityWhenListNameNotExistTest(){
+		String entity = "entity";
+		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(null);
+		controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
+		Mockito.verify(listRepository, Mockito.times(1)).findByName(Mockito.anyString());
+		Mockito.verify(listRepository, Mockito.never()).delete(Mockito.anyString());
+	}
+	
+	@Test
+	public void redirecToErrorPageWhenDeleteAndListNameNotExistsTest(){
+		String entity = "name";
+		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(null);
+		String result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
+		Assert.assertEquals("errorListNotExists", result);
+	}
+	
+	@Test
+	public void redirecToTodoListsPageAfterSuppressionListTest(){
+		String entity = "redirectAfterSuppression";
+		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(new List());
+		String result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
+		Assert.assertEquals("todolists", result);
+	}
 }
