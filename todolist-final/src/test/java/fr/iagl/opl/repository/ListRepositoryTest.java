@@ -14,7 +14,7 @@ public class ListRepositoryTest extends SpringIntegrationTest {
 
 	@Autowired
 	private ListRepository listRepository;
-
+	
 	@Test
 	public void findByNameTest(){
 		List entity = listRepository.findByName("work");
@@ -28,5 +28,16 @@ public class ListRepositoryTest extends SpringIntegrationTest {
 		entity.setName("saveEntityTest");
 		listRepository.save(entity);
 		Assert.assertNotNull(listRepository.findByName(entity.getName()));
+	}
+	
+	/**
+	 * Dans le setup de base de données pour les tests la liste home contient des taches.
+	 * Le mapping des contraintes permet de mettre en place les clé étrangères.
+	 * Le test a pour but de contrôler que la contrainte delete cascade est active.
+	 */
+	@Test
+	public void deleteCascadeTest(){
+		listRepository.delete("home");
+		Assert.assertNull(listRepository.findByName("home"));
 	}
 }
