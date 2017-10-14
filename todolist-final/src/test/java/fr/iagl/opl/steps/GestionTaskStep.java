@@ -1,11 +1,15 @@
 package fr.iagl.opl.steps;
 
+import org.junit.runner.RunWith;
+
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.junit.Cucumber;
 import fr.iagl.opl.SpringIntegrationTest;
 
+@RunWith(Cucumber.class)
 public class GestionTaskStep extends SpringIntegrationTest{
 	@Given("^J ai cree une liste todo$")
 	public void j_ai_cree_une_liste_todo() throws Throwable {

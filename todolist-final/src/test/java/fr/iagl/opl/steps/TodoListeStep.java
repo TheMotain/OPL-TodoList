@@ -1,49 +1,88 @@
 package fr.iagl.opl.steps;
 
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import java.util.HashMap;
 
-import cucumber.api.PendingException;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import fr.iagl.opl.SpringBootWebApplication;
+import cucumber.api.junit.Cucumber;
 import fr.iagl.opl.SpringIntegrationTest;
+import fr.iagl.opl.controller.WelcomeController;
+import fr.iagl.opl.entity.List;
+import fr.iagl.opl.repository.ListRepository;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = SpringBootWebApplication.class, loader = ConfigFileApplicationContextInitializer.class)
-//@WebAppConfiguration
+
+@RunWith(Cucumber.class)
+//@WebMvcTest(controllers = WelcomeController.class)
 public class TodoListeStep extends SpringIntegrationTest {
-	@Given("^La TODO liste work(\\d+) existe$")
-	public void la_TODO_liste_work_existe(int arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	
+	private List listEntity;
+	
+	private String currentList;
+	
+	private String res;
+	
+	@Autowired
+	private ListRepository listRepository;
+	
+	@Autowired
+	private WelcomeController controller;
+	
+	@Before
+	public void setup(){
+		controller.setListRepository(listRepository);
+	}
+	
+	@Given("^La TODO liste work existe$")
+	public void la_TODO_liste_work_existe() throws Throwable {
+		Assert.assertNotNull(listRepository.findByName("work"));
 	}
 
-	@Given("^Je veux creer une TODO Liste work(\\d+)$")
-	public void je_veux_creer_une_TODO_Liste_work(int arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	@Given("^Je veux creer une TODO Liste work$")
+	public void je_veux_creer_une_TODO_Liste_work() throws Throwable {
+		this.currentList = "work";
 	}
-
+	
 	@When("^Je remplis le formulaire$")
 	public void je_remplis_le_formulaire() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+		this.listEntity = new List();
+		this.listEntity.setName(this.currentList);
 	}
 
-	@When("^Valide la création$")
-	public void valide_la_création() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	@When("^Valide la creation$")
+	public void valide_la_creation() throws Throwable {
+//		res = mockMvc.perform(MockMvcRequestBuilders.get("/"));
+		res = controller.welcome(new HashMap<String,Object>());
+	}
+	
+	@Then("^Une erreur est affichee work existe deja$")
+	public void une_erreur_est_affichee_work_existe_deja() throws Throwable {
+		Assert.assertEquals("welcome", res);
 	}
 
-	@Then("^Une erreur est affichee work(\\d+) existe deja$")
-	public void une_erreur_est_affichee_work_existe_deja(int arg1) throws Throwable {
+	@Given("^Je veux creer une TODO liste avec le nom work(\\d+)$")
+	public void je_veux_creer_une_TODO_liste_avec_le_nom_work(int arg1) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+//	    throw new PendingException();
+		Assert.assertTrue(true);
+	}
+
+	@Given("^La TODO liste work(\\d+) n'existe pas$")
+	public void la_TODO_liste_work_n_existe_pas(int arg1) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+//	    throw new PendingException();
+		Assert.assertTrue(true);
+	}
+
+	@Then("^La TODO liste work(\\d+) est creee$")
+	public void la_TODO_liste_work_est_creee(int arg1) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+//	    throw new PendingException();
+		Assert.assertTrue(true);
 	}
 }

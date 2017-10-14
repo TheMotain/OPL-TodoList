@@ -12,12 +12,15 @@ import fr.iagl.opl.repository.ListRepository;
 public class WelcomeController {
 
 	@Autowired
-	ListRepository listRepository;
+	private ListRepository listRepository;
 
 	@RequestMapping("/")
 	public String welcome(Map<String, Object> model) {
-		model.put("message", listRepository.findByName("test").getName());
+		model.put("message", listRepository.findByName("work").getName());
 		return "welcome";
 	}
 
+	public void setListRepository(ListRepository listRepository) {
+		this.listRepository = listRepository;
+	}
 }
