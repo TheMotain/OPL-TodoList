@@ -21,4 +21,12 @@ public class ListRepositoryTest extends SpringIntegrationTest {
 		Assert.assertNotNull(entity);
 		Assert.assertEquals("work", entity.getName());
 	}
+	
+	@Test
+	public void saveEntityTest(){
+		List entity = new List();
+		entity.setName("saveEntityTest");
+		listRepository.save(entity);
+		Assert.assertNotNull(listRepository.findByName(entity.getName()));
+	}
 }
