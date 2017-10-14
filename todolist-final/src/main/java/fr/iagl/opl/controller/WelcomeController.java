@@ -16,7 +16,7 @@ public class WelcomeController {
 
 	@RequestMapping("/")
 	public String welcome(Map<String, Object> model) {
-		model.put("message", listRepository.findById(1L).getName());
+		model.put("message", listRepository.findByName("test").getName());
 		return "welcome";
 	}
 
