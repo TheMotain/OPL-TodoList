@@ -8,7 +8,7 @@ Feature: Gestion TODO List
     And Je veux creer une TODO Liste work
     When Je remplis le formulaire
     And Valide la creation
-    Then Une erreur est affichee work existe deja
+    Then Je suis redirige sur la page erreur work existe deja
 
   @tag2
   Scenario Outline: Suppression d une TODO Liste
@@ -30,3 +30,15 @@ Feature: Gestion TODO List
       | work1 |
       | work2 |
       | work3 |
+
+  @tag4
+  Scenario Outline: Redirection apres creation
+    Given Je veux creer une TODO liste avec le nom <name>
+    And La TODO liste <name> n'existe pas
+    When Je remplis le formulaire
+    And Valide la creation
+    Then Je suis redirige vers la liste des todolists
+
+    Examples:
+      | name        |
+      | redirection |
