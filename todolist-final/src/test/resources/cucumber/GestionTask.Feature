@@ -7,45 +7,32 @@ Feature: Gestion Item
     Given J ai cree une liste <list>
     And Je veux creer un task
     When Je clique le bouton creer un task
-    And Je remplis le formulaire avec <name>, <description>, <creation_date>, <done>
+    And Je remplis le formulaire avec <task>, <description>, <creation_date>, <done>
     And Je valide creation
-    Then Un task <name> est cree
+    Then Un task <task> est cree
 
     Examples: 
-      | list | name  | description | creation_date | done  |
-      | todo | task1 | Hello       |      20171011 | false |
-
-  @tag2
-  Scenario Outline: Modification Un Task
-    Given J ai cree un task <name> dans la liste <list>
-    And Je veux modifier un task
-    When Je clique le bouton modifier un task
-    And Je modifie son <name>, <description>, <creation_date>, <done>
-    And Je valide modification
-    Then Le task <name> est modifie
-
-    Examples: 
-      | list | name  | description | creation_date | done  |
-      | todo | task1 | Hello       |      20171011 | false |
+      | list | task    | description | creation_date | done  |
+      | work | meeting | null        |      20171011 | false |
 
   @tag3
-  Scenario Outline: Suppression d Un Task
-    Given J ai <total> task dans ma liste
-    When Je finis <finished> task dans ma liste
-    Then J ai <left> task dans ma liste
+  Scenario Outline: Finir d Un Task
+    Given Je veux finir <task> dans ma liste <list>
+    And Task <task> a son etat initial <initial>
+    When Je change son etat a <done>
+    Then Je suis redirige vers le page de resultat
 
     Examples: 
-      | total | delete | left |
-      |     3 |      1 |    2 |
-      |     5 |      1 |    4 |
+      | list | task   | initial | done |
+      | home | lunch  | false   | true |
+      | home | dinner | true    | true |
 
   @tag4
-  Scenario Outline: Finir Un Task
-    Given J ai <total> task dans ma liste
-    When Je supprime <delete> task
-    Then J ai <left> task dans ma liste
+  Scenario Outline: Suppression d Un Task
+    Given J ai task <task> dans ma liste <list>
+    When Je supprime task <task>
+    Then Le task n'existe plus dans ma liste
 
     Examples: 
-      | total | finished | left |
-      |     3 |        1 |    2 |
-      |     5 |        1 |    4 |
+      | list   | task     |
+      | school | homework |
