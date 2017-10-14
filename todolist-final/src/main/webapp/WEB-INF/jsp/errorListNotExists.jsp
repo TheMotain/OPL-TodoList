@@ -30,11 +30,10 @@
 	<div class="container">
 
 		<div class="starter-template">
-			<form:form method="POST" action="/createTodoList" modelAttribute="listForm">
-	            <form:label path="name">Créer todoListe : Name</form:label>
-	            <form:input path="name"/>
-	            <input type="submit" value="Submit"/>
-			</form:form>
+			<div class="alert alert-danger">
+				La todolist à supprimer n'existe pas
+			</div>
+			<a href="/"><button type="button" class="btn">retour</button></a>
 		</div>
 
 	</div>
