@@ -1,5 +1,7 @@
 package fr.iagl.opl.steps;
 
+import java.util.List;
+
 import org.junit.runner.RunWith;
 
 import cucumber.api.PendingException;
@@ -10,11 +12,13 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 public class AffichageListeStep {
+	private List<String> todolists;
 	
 	@Given("^J ai les todo listes work, home, todel$")
 	public void j_ai_les_todo_listes_work_home_todel() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+		todolists.add("work");
+		todolists.add("home");
+		todolists.add("todel");
 	}
 
 	@When("^Je veux regarder toutes les listes$")

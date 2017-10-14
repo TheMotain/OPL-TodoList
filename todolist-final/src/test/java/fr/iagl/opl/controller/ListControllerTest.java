@@ -66,6 +66,16 @@ public class ListControllerTest extends SpringIntegrationTest {
 	}
 	
 	@Test
+	public void resetMappedListEntityCallListFormOnTheModelMap(){
+		ModelMap model = new ModelMap();
+		List entity = new List();
+		entity.setName("entity");
+		model.addAttribute("listForm", entity);
+		controller.createList(entity, Mockito.mock(BindingResult.class), model);
+		Assert.assertNull(((List)model.get("listForm")).getName());
+	}
+	
+	@Test
 	public void callDeleteEntityTest(){
 		String entity = "entity";
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(new List());

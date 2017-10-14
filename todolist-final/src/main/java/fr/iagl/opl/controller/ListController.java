@@ -22,6 +22,7 @@ public class ListController {
 
 	@RequestMapping(value = "/createTodoList", method = RequestMethod.POST)
 	public String createList(@ModelAttribute("listForm") List listForm, BindingResult result, ModelMap model) {
+		model.put("listForm", new List());
 		if (null == listRepository.findByName(listForm.getName())) {
 			listRepository.save(listForm);
 			return "todolists";
