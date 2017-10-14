@@ -8,9 +8,15 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.junit.Cucumber;
 import fr.iagl.opl.SpringIntegrationTest;
+import fr.iagl.opl.entity.Task;
 
 @RunWith(Cucumber.class)
 public class GestionTaskStep extends SpringIntegrationTest{
+	
+	private Task taskEntity;
+	
+	
+	
 	@Given("^J ai cree une liste todo$")
 	public void j_ai_cree_une_liste_todo() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions

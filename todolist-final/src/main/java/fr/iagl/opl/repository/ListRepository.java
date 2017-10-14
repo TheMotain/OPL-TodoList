@@ -9,7 +9,7 @@ import fr.iagl.opl.entity.List;
  * @author ALEX
  *
  */
-public interface ListRepository extends CrudRepository<List, Long>{
+public interface ListRepository extends CrudRepository<List, String>{
 	
 	/**
 	 * Récupère une liste par son nom
