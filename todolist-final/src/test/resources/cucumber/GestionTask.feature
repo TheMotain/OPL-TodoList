@@ -3,35 +3,38 @@ Feature: Gestion Item
   Creation ou modification d un task
 
   @tag1
-  Scenario Outline: Creation d Un Task
-    Given J ai cree une liste <list>
-    And Je veux creer un task avec le nom <task>
-    When Je clique le bouton et remplis le formulaire avec <task>, <description>, <creation_date>, <done>
-    And Je valide creation
-    Then Je suis redirige vers la page de resultat
+  Scenario Outline: Creation d'une Task
+    Given La liste <list> existe
+    And Je veux creer un task avec le nom <task> dans la liste
+    When Je remplis le formulaire avec le nom <task> et la description <description>
+    And Je valide la creation
+    Then La task est cree, la date du jour est mise automatiquement et le statut est a false
+    And Je suis redirige vers la page des resultats
 
     Examples: 
-      | list | task    | description | creation_date | done  |
-      | work | meeting | null        | null          | false |
+      | list | task       | description |
+      | work | createTask | null        |
 
   @tag2
-  Scenario Outline: Finir d Un Task
-    Given Je veux finir le task <task> dans ma liste <list>
-    And Task <task> a son etat initial <initial>
-    When Je change son etat a <done>
-    Then Je suis redirige vers la page de resultat
+  Scenario Outline: Finir une Task
+    Given La task <task> existe dans la liste <list>
+    And Son statut est a l'etat <initial>
+    When Je veux finir la tache
+    Then Le statut de la tache est done
+    And Je suis redirige vers la page des resultats
 
     Examples: 
-      | list | task   | initial | done |
-      | home | lunch  | false   | true |
-      | home | dinner | true    | true |
+      | list | task   | initial |
+      | home | lunch  | true    |
+      | home | dinner | false   |
 
   @tag3
-  Scenario Outline: Suppression d Un Task
-    Given J ai task <task> dans ma liste <list>
-    When Je supprime task <task>
-    Then Le task <task> n'existe plus dans ma liste
+  Scenario Outline: Suppression d'une Task
+    Given La task <task> existe dans la liste <list>
+    When Je supprime la supprime
+    Then Le task <task> n'existe plus presente dans la liste
+		And Je suis redirige vers la page des resultats
 
     Examples: 
       | list   | task     |
-      | school | homework |
+      | work   | meeting  |

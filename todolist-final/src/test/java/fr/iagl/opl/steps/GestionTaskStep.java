@@ -1,9 +1,10 @@
 package fr.iagl.opl.steps;
 
+import java.util.Calendar;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.view.RedirectView;
@@ -14,7 +15,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.junit.Cucumber;
 import fr.iagl.opl.SpringIntegrationTest;
-import fr.iagl.opl.controller.ListController;
 import fr.iagl.opl.controller.TaskController;
 import fr.iagl.opl.entity.List;
 import fr.iagl.opl.entity.Task;
@@ -24,22 +24,9 @@ import fr.iagl.opl.repository.TaskRepository;
 
 @RunWith(Cucumber.class)
 public class GestionTaskStep extends SpringIntegrationTest{
-
-	private Task taskEntity;
 	
-	private List listEntity;
-	
-	private String cuurentTask;
-	
-	private String currentList;
-	
-	private Boolean taskEtat;
-	
-	private RedirectView res;
-	
-	private ModelMap model;
-	
-	private java.util.List<Task> tasks;
+	@Autowired
+	private ListRepository listRepository;
 	
 	@Autowired
 	private TaskRepository taskRepository;
@@ -47,122 +34,110 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	@Autowired
 	private TaskController taskController;
 	
-	@Autowired
-	private ListRepository listRepository;
+	private String currentTask;
 	
-	@Autowired
-	private ListController listController;
+	private String currentList;
+	
+	private Task currentTaskEntity;
+	
+	private String currentDescription;
+	
+	private RedirectView res;
 	
 	@Before
-	public void setup() {
+	public void setup(){
+		taskController.setListRepository(listRepository);
 		taskController.setTaskRepository(taskRepository);
-		listController.setListRepository(listRepository);
 	}
 	
-	@Given("^J ai cree une liste work$")
-	public void j_ai_cree_une_liste_work() throws Throwable {
-	    this.currentList = "work";
-	    this.listEntity = new List();
-	    this.listEntity.setName(currentList);
+	@Given("^La liste work existe$")
+	public void la_liste_work_existe() throws Throwable {
+		Assert.assertNotNull(listRepository.findByName("work"));
+		currentList = "work";
 	}
 
-	@Given("^Je veux creer un task avec le nom meeting$")
-	public void je_veux_creer_un_task_avec_le_nom_meeting() throws Throwable {
-	    this.cuurentTask = "meeting";
+	@Given("^Je veux creer un task avec le nom (\\w+) dans la liste$")
+	public void je_veux_creer_un_task_avec_le_nom_meeting_dans_la_liste(String taskName) throws Throwable {
+		currentTask = taskName;
 	}
 
-	@When("^Je clique le bouton et remplis le formulaire avec meeting, null, null, false$")
-	public void je_clique_le_bouton_et_remplis_le_formulaire_avec_meeting_null_null_false() throws Throwable {
-	    this.model = new ModelMap();
-	    this.taskEntity = new Task();
-	    this.taskEntity.setName(cuurentTask);
-	    this.taskEntity.setList(listEntity);
-	    this.taskEntity.setDescription(null);
-	    this.taskEntity.setCreation_date(null);
-	    this.taskEntity.setDone(false); 
-
+	@When("^Je remplis le formulaire avec le nom (\\w+) et la description (\\w+)$")
+	public void je_remplis_le_formulaire_avec_le_nom_meeting_et_la_description_null(String name, String description) throws Throwable {
+		Assert.assertEquals(currentTask, name);
+		currentDescription = description;
 	}
 
-	@When("^Je valide creation$")
-	public void je_valide_creation() throws Throwable {
-	    res = taskController.createTask(currentList, Mockito.anyObject(), Mockito.anyObject(), this.model);
+	@When("^Je valide la creation$")
+	public void je_valide_la_creation() throws Throwable {
+		res = taskController.createTask(currentList, currentTask, currentDescription, new ModelMap());
 	}
 
-	@Given("^Je veux finir le task lunch dans ma liste home$")
-	public void je_veux_finir_le_task_lunch_dans_ma_liste_home() throws Throwable {
-		this.currentList = "home";
-		this.listEntity = new List();
-		this.listEntity.setName(currentList);
-		
-		this.cuurentTask = "lunch";
-		this.taskEntity = new Task();
-		this.taskEntity.setName(cuurentTask);
-		this.taskEntity.setList(listEntity);
-		
+	@Then("^La task est cree, la date du jour est mise automatiquement et le statut est a false$")
+	public void la_task_est_cree() throws Throwable {
+		List list = new List();
+		list.setName(currentList);
+		Task task = taskRepository.findTaskByNameAndList(currentTask, list);
+		Assert.assertNotNull(task);
+		Assert.assertEquals(currentDescription, task.getDescription());
+		Assert.assertFalse(task.isDone());
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		cal.setTime(task.getCreation_date());
+		Assert.assertEquals(year, cal.get(Calendar.YEAR));
+		Assert.assertEquals(month, cal.get(Calendar.MONTH));
+		Assert.assertEquals(day, cal.get(Calendar.DAY_OF_MONTH));
 	}
 
-	@Given("^Task lunch a son etat initial false$")
-	public void task_lunch_a_son_etat_initial_false() throws Throwable {
-	    this.taskEtat = false;
-	    this.taskEntity.setDone(taskEtat);
+	@Then("^Je suis redirige vers la page des resultats$")
+	public void je_suis_redirige_vers_la_page_des_resultats() throws Throwable {
+		Assert.assertEquals(PageEnum.HOME.getUrl(), res.getUrl());
 	}
 
-	@When("^Je change son etat a true$")
-	public void je_change_son_etat_a_true() throws Throwable {
-	    this.taskEtat = true;
-	    this.taskEntity.setDone(taskEtat);
+	@Given("^La task (\\w+) existe dans la liste (\\w+)$")
+	public void la_lunch_existe_dans_la_liste_home(String task, String listname) throws Throwable {
+		List list = new List();
+		list.setName(listname);
+		currentTaskEntity = taskRepository.findTaskByNameAndList(task, list);
+		Assert.assertNotNull(currentTaskEntity);
+		currentTask = task;
+		currentList = listname;
 	}
 
-	@Then("^Je suis redirige vers la page de resultat$")
-	public void je_suis_redirige_vers_la_page_de_resultat() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-//		Assert.assertEquals(PageEnum.ERROR_WHEN_CREATING_TASK.getUrl(), res.getUrl());
-		throw new PendingException();
+	@Given("^Son statut est a l'etat (\\w+)$")
+	public void son_statut_est_a_l_etat_true(String status) throws Throwable {
+		if(new Boolean(status).booleanValue()){
+			Assert.assertTrue(currentTaskEntity.isDone());
+		}else{
+			Assert.assertFalse(currentTaskEntity.isDone());
+		}
 	}
 
-	@Given("^Je veux finir le task dinner dans ma liste home$")
-	public void je_veux_finir_le_task_dinner_dans_ma_liste_home() throws Throwable {
-		this.currentList = "home";
-		this.listEntity = new List();
-		this.listEntity.setName(currentList);
-		
-		this.cuurentTask = "dinner";
-		this.taskEntity = new Task();
-		this.taskEntity.setName(cuurentTask);
-		this.taskEntity.setList(listEntity);
+	@When("^Je veux finir la tache$")
+	public void je_veux_finir_la_tache() throws Throwable {
+		res = taskController.doneTask(currentTaskEntity.getId().toString(), new ModelMap());
 	}
 
-	@Given("^Task dinner a son etat initial true$")
-	public void task_dinner_a_son_etat_initial_true() throws Throwable {
-		this.taskEtat = true;
-	    this.taskEntity.setDone(taskEtat);
+	@Then("^Le statut de la tache est done$")
+	public void le_statut_de_la_tache_est_done() throws Throwable {
+		List list = new List();
+		list.setName(currentList);
+		currentTaskEntity = taskRepository.findTaskByNameAndList(currentTask, list);
+		Assert.assertNotNull(currentTaskEntity);
+		Assert.assertTrue(currentTaskEntity.isDone());
 	}
 
-	@Given("^J ai task homework dans ma liste school$")
-	public void j_ai_task_homework_dans_ma_liste_school() throws Throwable {
-		this.currentList = "school";
-		this.listEntity = new List();
-		this.listEntity.setName(currentList);
-		
-		this.cuurentTask = "homework";
-		this.taskEntity = new Task();
-		this.taskEntity.setName(cuurentTask);
-		this.taskEntity.setList(listEntity);
+	@When("^Je supprime la supprime$")
+	public void je_supprime_la_supprime() throws Throwable {
+		res = taskController.deleteTask(currentTaskEntity.getId().toString(), new ModelMap());
 	}
 
-	@When("^Je supprime task homework$")
-	public void je_supprime_task_homework(String arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-//		res = taskController.deleteTask(arg1, model);
-	}
-
-	@Then("^Le task homework n'existe plus dans ma liste$")
-	public void le_task_homework_n_existe_plus_dans_ma_liste() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-//	    Assert.assertNull(taskRepository.findTaskByNameAndList("homework", this.listEntity));
-	}
-	
+	@Then("^Le task (\\w+) n'existe plus presente dans la liste$")
+	public void le_task_homework_n_existe_plus_presente_dans_la_liste(String listname) throws Throwable {
+		List list = new List();
+		list.setName(listname);
+		Assert.assertNull(taskRepository.findTaskByNameAndList(currentTask, list));
+	}	
 
 }
