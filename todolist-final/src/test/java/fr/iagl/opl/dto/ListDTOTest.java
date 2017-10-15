@@ -108,9 +108,13 @@ public class ListDTOTest {
 		tasks.add(new TaskDTO());
 		tasks.add(new TaskDTO());
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[0]);
+		Assert.assertEquals(tasks.get(0),dto.getFormatedListToDisplay().get(0)[0]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[1]);
+		Assert.assertEquals(tasks.get(1),dto.getFormatedListToDisplay().get(0)[1]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[2]);
+		Assert.assertEquals(tasks.get(2),dto.getFormatedListToDisplay().get(0)[2]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[3]);
+		Assert.assertEquals(tasks.get(3),dto.getFormatedListToDisplay().get(0)[3]);
 		Assert.assertNull(dto.getFormatedListToDisplay().get(0)[4]);
 	}
 	
@@ -125,10 +129,15 @@ public class ListDTOTest {
 		tasks.add(new TaskDTO());
 		tasks.add(new TaskDTO());
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[0]);
+		Assert.assertEquals(tasks.get(0),dto.getFormatedListToDisplay().get(0)[0]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[1]);
+		Assert.assertEquals(tasks.get(1),dto.getFormatedListToDisplay().get(0)[1]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[2]);
+		Assert.assertEquals(tasks.get(2),dto.getFormatedListToDisplay().get(0)[2]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[3]);
+		Assert.assertEquals(tasks.get(3),dto.getFormatedListToDisplay().get(0)[3]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[4]);
+		Assert.assertEquals(tasks.get(4),dto.getFormatedListToDisplay().get(0)[4]);
 	}
 	
 	@Test
@@ -143,11 +152,17 @@ public class ListDTOTest {
 		tasks.add(new TaskDTO());
 		tasks.add(new TaskDTO());
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[0]);
+		Assert.assertEquals(tasks.get(0),dto.getFormatedListToDisplay().get(0)[0]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[1]);
+		Assert.assertEquals(tasks.get(1),dto.getFormatedListToDisplay().get(0)[1]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[2]);
+		Assert.assertEquals(tasks.get(2),dto.getFormatedListToDisplay().get(0)[2]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[3]);
+		Assert.assertEquals(tasks.get(3),dto.getFormatedListToDisplay().get(0)[3]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(0)[4]);
+		Assert.assertEquals(tasks.get(4),dto.getFormatedListToDisplay().get(0)[4]);
 		Assert.assertNotNull(dto.getFormatedListToDisplay().get(1)[0]);
+		Assert.assertEquals(tasks.get(5),dto.getFormatedListToDisplay().get(1)[0]);
 		Assert.assertNull(dto.getFormatedListToDisplay().get(1)[1]);
 		Assert.assertNull(dto.getFormatedListToDisplay().get(1)[2]);
 		Assert.assertNull(dto.getFormatedListToDisplay().get(1)[3]);

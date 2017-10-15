@@ -33,9 +33,9 @@ public class ListDTO {
 			TaskDTO[] taskDTO = new TaskDTO[MAX_TASK_TO_DISPLAY_ON_A_LINE];
 			end = i * MAX_TASK_TO_DISPLAY_ON_A_LINE + MAX_TASK_TO_DISPLAY_ON_A_LINE;
 			if(i == size - 1){
-				end = listToDisplay.size() - 1;
+				end = listToDisplay.size();
 			}
-			for(int n = i * MAX_TASK_TO_DISPLAY_ON_A_LINE; n <= end; n++){
+			for(int n = i * MAX_TASK_TO_DISPLAY_ON_A_LINE; n < end; n++){
 				taskDTO[n % MAX_TASK_TO_DISPLAY_ON_A_LINE] = listToDisplay.get(n);
 			}
 			output.add(taskDTO);
