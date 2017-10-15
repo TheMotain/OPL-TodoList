@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iagl.opl.entity.List;
+import fr.iagl.opl.entity.Task;
 import fr.iagl.opl.enums.ModelAttributeEnum;
 import fr.iagl.opl.enums.PageEnum;
 import fr.iagl.opl.repository.ListRepository;
@@ -42,6 +43,11 @@ public class ListController {
 
 	public void setListRepository(ListRepository listRepository) {
 		this.listRepository = listRepository;
+	}
+
+	public String createTask(Task taskEntity, Object anyObject, ModelMap model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

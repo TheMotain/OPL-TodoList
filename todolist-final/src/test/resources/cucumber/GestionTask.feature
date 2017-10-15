@@ -5,29 +5,28 @@ Feature: Gestion Item
   @tag1
   Scenario Outline: Creation d Un Task
     Given J ai cree une liste <list>
-    And Je veux creer un task
-    When Je clique le bouton creer un task
-    And Je remplis le formulaire avec <task>, <description>, <creation_date>, <done>
+    And Je veux creer un task avec le nom <task>
+    When Je clique le bouton et remplis le formulaire avec <task>, <description>, <creation_date>, <done>
     And Je valide creation
-    Then Un task <task> est cree
+    Then Je suis redirige vers la page de task
 
     Examples: 
       | list | task    | description | creation_date | done  |
-      | work | meeting | null        |      20171011 | false |
+      | work | meeting | null        | null          | false |
 
-  @tag3
+  @tag2
   Scenario Outline: Finir d Un Task
-    Given Je veux finir <task> dans ma liste <list>
+    Given Je veux finir le task <task> dans ma liste <list>
     And Task <task> a son etat initial <initial>
     When Je change son etat a <done>
-    Then Je suis redirige vers le page de resultat
+    Then Je suis redirige vers la page de resultat
 
     Examples: 
       | list | task   | initial | done |
       | home | lunch  | false   | true |
       | home | dinner | true    | true |
 
-  @tag4
+  @tag3
   Scenario Outline: Suppression d Un Task
     Given J ai task <task> dans ma liste <list>
     When Je supprime task <task>
