@@ -1,10 +1,12 @@
 package fr.iagl.opl.steps;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.view.RedirectView;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
@@ -16,12 +18,13 @@ import fr.iagl.opl.controller.ListController;
 import fr.iagl.opl.controller.TaskController;
 import fr.iagl.opl.entity.List;
 import fr.iagl.opl.entity.Task;
+import fr.iagl.opl.enums.PageEnum;
 import fr.iagl.opl.repository.ListRepository;
 import fr.iagl.opl.repository.TaskRepository;
 
 @RunWith(Cucumber.class)
 public class GestionTaskStep extends SpringIntegrationTest{
-/*
+
 	private Task taskEntity;
 	
 	private List listEntity;
@@ -32,7 +35,7 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	
 	private Boolean taskEtat;
 	
-	private String res;
+	private RedirectView res;
 	
 	private ModelMap model;
 	
@@ -82,13 +85,7 @@ public class GestionTaskStep extends SpringIntegrationTest{
 
 	@When("^Je valide creation$")
 	public void je_valide_creation() throws Throwable {
-	    res = listController.createTask(taskEntity, Mockito.anyObject(), this.model);
-	}
-
-	@Then("^Je suis redirige vers la page de task$")
-	public void je_suis_redirige_vers_la_page_de_task() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    res = taskController.createTask(currentList, Mockito.anyObject(), Mockito.anyObject(), this.model);
 	}
 
 	@Given("^Je veux finir le task lunch dans ma liste home$")
@@ -119,7 +116,8 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	@Then("^Je suis redirige vers la page de resultat$")
 	public void je_suis_redirige_vers_la_page_de_resultat() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+//		Assert.assertEquals(PageEnum.ERROR_WHEN_CREATING_TASK.getUrl(), res.getUrl());
+		throw new PendingException();
 	}
 
 	@Given("^Je veux finir le task dinner dans ma liste home$")
@@ -153,16 +151,18 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	}
 
 	@When("^Je supprime task homework$")
-	public void je_supprime_task_homework() throws Throwable {
+	public void je_supprime_task_homework(String arg1) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
+//		res = taskController.deleteTask(arg1, model);
 	}
 
-	@Then("^Le task n'existe plus dans ma liste$")
-	public void le_task_n_existe_plus_dans_ma_liste() throws Throwable {
+	@Then("^Le task homework n'existe plus dans ma liste$")
+	public void le_task_homework_n_existe_plus_dans_ma_liste() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
+//	    Assert.assertNull(taskRepository.findTaskByNameAndList("homework", this.listEntity));
 	}
 	
-*/
+
 }
