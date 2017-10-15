@@ -42,6 +42,11 @@ public class HomeController {
 	public String redirectErrorListNotExists(ModelMap model){
 		return PageEnum.ERROR_LIST_NOT_EXISTS.getPage();
 	}
+	
+	@RequestMapping(value = "/errorWhenCreatingTask", method = RequestMethod.GET)
+	public String redirectErrorWhenCreatingTask(ModelMap model){
+		return PageEnum.ERROR_WHEN_CREATING_TASK.getPage();
+	}
 
 	private java.util.List<ListDTO> transformListsToDTO(java.util.List<List> todolists) {
 		java.util.List<ListDTO> output = new ArrayList<ListDTO>();
