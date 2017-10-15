@@ -18,11 +18,10 @@ import fr.iagl.opl.entity.List;
 import fr.iagl.opl.entity.Task;
 import fr.iagl.opl.repository.ListRepository;
 import fr.iagl.opl.repository.TaskRepository;
-import junit.framework.Assert;
 
 @RunWith(Cucumber.class)
 public class GestionTaskStep extends SpringIntegrationTest{
-
+/*
 	private Task taskEntity;
 	
 	private List listEntity;
@@ -165,5 +164,5 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	    throw new PendingException();
 	}
 	
-
+*/
 }

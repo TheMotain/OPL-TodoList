@@ -45,9 +45,4 @@ public class ListController {
 		this.listRepository = listRepository;
 	}
 
-	public String createTask(Task taskEntity, Object anyObject, ModelMap model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

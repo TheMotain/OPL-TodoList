@@ -2,6 +2,8 @@ package fr.iagl.opl.controller;
 
 import java.util.ArrayList;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +23,7 @@ public class HomeController {
 	private ListRepository listRepository;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@Transactional
 	public String home(ModelMap model){
 		java.util.List<List> todolists = new ArrayList<List>();
 		listRepository.findAll().iterator().forEachRemaining(todolists::add);
@@ -34,6 +37,7 @@ public class HomeController {
 		for(List list : todolists){
 			ListDTO dto = new ListDTO();
 			dto.setName(list.getName());
+			dto.mapListTaskEntityToListTaskDTO(list.getTasks());
 			output.add(dto);
 		}
 		return output;

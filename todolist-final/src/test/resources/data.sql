@@ -1,7 +1,20 @@
 insert into list values ('work');
 insert into list values ('home');
 insert into list values ('todel');
+insert into list values ('display');
 
 insert into task (id, list, name, description, creation_date, done) values ('0','work','meeting','todo','2017-10-11','false');
 insert into task (id, list, name, description, creation_date, done) values ('1','home','lunch','hello','2017-10-11','true');
-insert into task (id, list, name, description, creation_date, done) values ('2','home','dinner','topreprare','2017-10-11','false');
+insert into task (id, list, name, description, creation_date, done) values ('2','home','dinner','toprepare','2017-10-11','false');
+insert into task (id, list, name, description, creation_date, done) values ('3','display','task1','display','2017-10-11','true');
+insert into task (id, list, name, description, creation_date, done) values ('4','display','task2','display','2017-10-11','false');
+insert into task (id, list, name, description, creation_date, done) values ('5','display','task3','display','2017-10-11','true');
+insert into task (id, list, name, description, creation_date, done) values ('6','display','task4','display','2017-10-11','false');
+insert into task (id, list, name, description, creation_date, done) values ('7','display','task5','display','2017-10-11','true');
+insert into task (id, list, name, description, creation_date, done) values ('8','display','task6','display','2017-10-11','false');
+insert into task (id, list, name, description, creation_date, done) values ('9','display','task7','display','2017-10-11','true');
+insert into task (id, list, name, description, creation_date, done) values ('10','display','task8','display','2017-10-11','false');
+insert into task (id, list, name, description, creation_date, done) values ('11','display','task9','display','2017-10-11','true');
+insert into task (id, list, name, description, creation_date, done) values ('12','display','task10','display','2017-10-11','false');
+insert into task (id, list, name, description, creation_date, done) values ('13','display','task11','display','2017-10-11','true');
+insert into task (id, list, name, description, creation_date, done) values ('14','display','task12','display','2017-10-11','false');

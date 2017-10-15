@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import fr.iagl.opl.SpringIntegrationTest;
 import fr.iagl.opl.dto.ListDTO;
 import fr.iagl.opl.entity.List;
+import fr.iagl.opl.entity.Task;
 import fr.iagl.opl.enums.ModelAttributeEnum;
 import fr.iagl.opl.enums.PageEnum;
 import fr.iagl.opl.repository.ListRepository;
@@ -83,10 +84,13 @@ public class HomeControllerTest extends SpringIntegrationTest{
 		java.util.List<List> lists = new ArrayList<>();
 		List list1 = new List();
 		list1.setName("l1");
+		list1.setTasks(new ArrayList<>());
 		List list2 = new List();
 		list2.setName("l2");
+		list2.setTasks(new ArrayList<>());
 		List list3 = new List();
 		list3.setName("l3");
+		list3.setTasks(new ArrayList<>());
 		lists.add(list1);
 		lists.add(list2);
 		lists.add(list3);
@@ -99,5 +103,56 @@ public class HomeControllerTest extends SpringIntegrationTest{
 				Assert.fail();
 			}
 		}
+	}
+	
+	@Test
+	public void getAllTodoListIncludeGetAllTaskFromEachListTest(){
+		java.util.List<List> lists = new ArrayList<>();
+		List list1 = Mockito.mock(List.class);
+		List list2 = Mockito.mock(List.class);
+		List list3 = Mockito.mock(List.class);
+		lists.add(list1);
+		lists.add(list2);
+		lists.add(list3);
+		Mockito.when(listRepository.findAll()).thenReturn(lists);
+		controller.home(Mockito.mock(ModelMap.class));
+		Mockito.verify(list1, Mockito.times(1)).getTasks();
+		Mockito.verify(list2, Mockito.times(1)).getTasks();
+		Mockito.verify(list3, Mockito.times(1)).getTasks();
+	}
+	
+	@Test
+	public void getAllTodoListIncludeMapAllTaskFromEachListFromTaskEntityToTaskDTO(){
+		java.util.List<List> lists = new ArrayList<>();
+		java.util.List<Task> tasks = new ArrayList<>();
+		List list1 = Mockito.mock(List.class);
+		List list2 = Mockito.mock(List.class);
+		List list3 = Mockito.mock(List.class);
+		lists.add(list1);
+		lists.add(list2);
+		lists.add(list3);
+		Task task1 = Mockito.mock(Task.class);
+		Task task2 = Mockito.mock(Task.class);
+		Task task3 = Mockito.mock(Task.class);
+		tasks.add(task1);
+		tasks.add(task2);
+		tasks.add(task3);
+		Mockito.when(listRepository.findAll()).thenReturn(lists);
+		Mockito.when(list1.getTasks()).thenReturn(tasks);
+		Mockito.when(list2.getTasks()).thenReturn(tasks);
+		Mockito.when(list3.getTasks()).thenReturn(tasks);
+		controller.home(Mockito.mock(ModelMap.class));
+		Mockito.verify(task1, Mockito.times(3)).getId();
+		Mockito.verify(task1, Mockito.times(3)).getCreation_date();
+		Mockito.verify(task1, Mockito.times(3)).getDescription();
+		Mockito.verify(task1, Mockito.times(3)).getName();
+		Mockito.verify(task2, Mockito.times(3)).getId();
+		Mockito.verify(task2, Mockito.times(3)).getCreation_date();
+		Mockito.verify(task2, Mockito.times(3)).getDescription();
+		Mockito.verify(task2, Mockito.times(3)).getName();
+		Mockito.verify(task3, Mockito.times(3)).getId();
+		Mockito.verify(task3, Mockito.times(3)).getCreation_date();
+		Mockito.verify(task3, Mockito.times(3)).getDescription();
+		Mockito.verify(task3, Mockito.times(3)).getName();
 	}
 }
