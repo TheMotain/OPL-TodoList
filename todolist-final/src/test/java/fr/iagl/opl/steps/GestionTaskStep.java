@@ -1,5 +1,7 @@
 package fr.iagl.opl.steps;
 
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -32,6 +34,8 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	private String cuurentTask;
 	
 	private String currentList;
+	
+	private String taskId;
 	
 	private Boolean taskEtat;
 	
@@ -80,7 +84,10 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	    this.taskEntity.setDescription(null);
 	    this.taskEntity.setCreation_date(null);
 	    this.taskEntity.setDone(false); 
-
+	    
+	    tasks = new ArrayList<Task>();
+	    tasks.add(taskEntity);
+	    listEntity.setTasks(tasks);
 	}
 
 	@When("^Je valide creation$")
@@ -93,7 +100,10 @@ public class GestionTaskStep extends SpringIntegrationTest{
 		this.currentList = "home";
 		this.listEntity = new List();
 		this.listEntity.setName(currentList);
-		
+		tasks = new ArrayList<Task>();
+	    tasks.add(taskEntity);
+	    listEntity.setTasks(tasks);
+	    
 		this.cuurentTask = "lunch";
 		this.taskEntity = new Task();
 		this.taskEntity.setName(cuurentTask);
@@ -103,21 +113,18 @@ public class GestionTaskStep extends SpringIntegrationTest{
 
 	@Given("^Task lunch a son etat initial false$")
 	public void task_lunch_a_son_etat_initial_false() throws Throwable {
-	    this.taskEtat = false;
-	    this.taskEntity.setDone(taskEtat);
+	    Assert.assertFalse(taskEntity.isDone());
 	}
 
 	@When("^Je change son etat a true$")
 	public void je_change_son_etat_a_true() throws Throwable {
-	    this.taskEtat = true;
-	    this.taskEntity.setDone(taskEtat);
+	    res = taskController.doneTask(taskId, model);
 	}
 
 	@Then("^Je suis redirige vers la page de resultat$")
 	public void je_suis_redirige_vers_la_page_de_resultat() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-//		Assert.assertEquals(PageEnum.ERROR_WHEN_CREATING_TASK.getUrl(), res.getUrl());
-		throw new PendingException();
+		Assert.assertEquals(PageEnum.HOME.getUrl(), res.getUrl());
+//		throw new PendingException();
 	}
 
 	@Given("^Je veux finir le task dinner dans ma liste home$")
@@ -125,7 +132,10 @@ public class GestionTaskStep extends SpringIntegrationTest{
 		this.currentList = "home";
 		this.listEntity = new List();
 		this.listEntity.setName(currentList);
-		
+		tasks = new ArrayList<Task>();
+	    tasks.add(taskEntity);
+	    listEntity.setTasks(tasks);
+	    
 		this.cuurentTask = "dinner";
 		this.taskEntity = new Task();
 		this.taskEntity.setName(cuurentTask);
@@ -143,7 +153,10 @@ public class GestionTaskStep extends SpringIntegrationTest{
 		this.currentList = "school";
 		this.listEntity = new List();
 		this.listEntity.setName(currentList);
-		
+		tasks = new ArrayList<Task>();
+	    tasks.add(taskEntity);
+	    listEntity.setTasks(tasks);
+	    
 		this.cuurentTask = "homework";
 		this.taskEntity = new Task();
 		this.taskEntity.setName(cuurentTask);
@@ -151,17 +164,13 @@ public class GestionTaskStep extends SpringIntegrationTest{
 	}
 
 	@When("^Je supprime task homework$")
-	public void je_supprime_task_homework(String arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-//		res = taskController.deleteTask(arg1, model);
+	public void je_supprime_task_homework() throws Throwable {
+		res = taskController.deleteTask(taskId, model);
 	}
 
 	@Then("^Le task homework n'existe plus dans ma liste$")
 	public void le_task_homework_n_existe_plus_dans_ma_liste() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-//	    Assert.assertNull(taskRepository.findTaskByNameAndList("homework", this.listEntity));
+	    Assert.assertNull(taskRepository.findTaskByNameAndList("homework", this.listEntity));
 	}
 	
 
