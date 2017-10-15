@@ -8,7 +8,7 @@ Feature: Gestion Item
     And Je veux creer un task avec le nom <task>
     When Je clique le bouton et remplis le formulaire avec <task>, <description>, <creation_date>, <done>
     And Je valide creation
-    Then Je suis redirige vers la page de task
+    Then Je suis redirige vers la page de resultat
 
     Examples: 
       | list | task    | description | creation_date | done  |
@@ -30,7 +30,7 @@ Feature: Gestion Item
   Scenario Outline: Suppression d Un Task
     Given J ai task <task> dans ma liste <list>
     When Je supprime task <task>
-    Then Le task n'existe plus dans ma liste
+    Then Le task <task> n'existe plus dans ma liste
 
     Examples: 
       | list   | task     |
