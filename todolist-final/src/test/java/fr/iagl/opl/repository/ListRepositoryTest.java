@@ -9,7 +9,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import fr.iagl.opl.SpringIntegrationTest;
 import fr.iagl.opl.entity.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 public class ListRepositoryTest extends SpringIntegrationTest {
 
 	@Autowired

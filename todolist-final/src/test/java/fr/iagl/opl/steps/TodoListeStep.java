@@ -14,6 +14,7 @@ import cucumber.api.junit.Cucumber;
 import fr.iagl.opl.SpringIntegrationTest;
 import fr.iagl.opl.controller.ListController;
 import fr.iagl.opl.entity.List;
+import fr.iagl.opl.enums.PageEnum;
 import fr.iagl.opl.repository.ListRepository;
 
 
@@ -63,7 +64,7 @@ public class TodoListeStep extends SpringIntegrationTest {
 	
 	@Then("^Je suis redirige sur la page erreur work existe deja$")
 	public void une_erreur_est_affichee_work_existe_deja() throws Throwable {
-		Assert.assertEquals("errorListAlreadyExists", res);
+		Assert.assertEquals(PageEnum.ERROR_LIST_ALREADY_EXISTS.getPage(), res);
 	}
 
 	@Given("^Je veux creer une TODO liste avec le nom work(\\d+)$")
@@ -95,7 +96,7 @@ public class TodoListeStep extends SpringIntegrationTest {
 
 	@Then("^Je suis redirige vers la liste des todolists$")
 	public void je_suis_redirige_vers_la_liste_des_todolists() throws Throwable {
-		Assert.assertEquals("todolists", res);
+		Assert.assertEquals(PageEnum.HOME.getPage(), res);
 	}
 	
 	@Given("^Je veux supprimer la TODO liste avec le nom (\\w+)$")

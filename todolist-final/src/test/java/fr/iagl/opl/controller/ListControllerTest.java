@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 
 import fr.iagl.opl.SpringIntegrationTest;
 import fr.iagl.opl.entity.List;
+import fr.iagl.opl.enums.ModelAttributeEnum;
+import fr.iagl.opl.enums.PageEnum;
 import fr.iagl.opl.repository.ListRepository;
 
 public class ListControllerTest extends SpringIntegrationTest {
@@ -53,7 +55,7 @@ public class ListControllerTest extends SpringIntegrationTest {
 		entity.setName("entity");
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(entity);
 		String result = controller.createList(entity, Mockito.mock(BindingResult.class), (ModelMap) Mockito.mock(ModelMap.class));
-		Assert.assertEquals("errorListAlreadyExists", result);
+		Assert.assertEquals(PageEnum.ERROR_LIST_ALREADY_EXISTS.getPage(), result);
 	}
 	
 	@Test
@@ -62,7 +64,7 @@ public class ListControllerTest extends SpringIntegrationTest {
 		entity.setName("redirectAfterCreation");
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(null);
 		String result = controller.createList(entity, Mockito.mock(BindingResult.class), (ModelMap) Mockito.mock(ModelMap.class));
-		Assert.assertEquals("todolists", result);
+		Assert.assertEquals(PageEnum.HOME.getPage(), result);
 	}
 	
 	@Test
@@ -70,9 +72,9 @@ public class ListControllerTest extends SpringIntegrationTest {
 		ModelMap model = new ModelMap();
 		List entity = new List();
 		entity.setName("entity");
-		model.addAttribute("listForm", entity);
+		model.addAttribute(ModelAttributeEnum.LIST_FORM.getAttribute(), entity);
 		controller.createList(entity, Mockito.mock(BindingResult.class), model);
-		Assert.assertNull(((List)model.get("listForm")).getName());
+		Assert.assertNull(((List)model.get(ModelAttributeEnum.LIST_FORM.getAttribute())).getName());
 	}
 	
 	@Test
@@ -97,7 +99,7 @@ public class ListControllerTest extends SpringIntegrationTest {
 		String entity = "name";
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(null);
 		String result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
-		Assert.assertEquals("errorListNotExists", result);
+		Assert.assertEquals(PageEnum.ERROR_LIST_NOT_EXISTS.getPage(), result);
 	}
 	
 	@Test
@@ -105,6 +107,6 @@ public class ListControllerTest extends SpringIntegrationTest {
 		String entity = "redirectAfterSuppression";
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(new List());
 		String result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
-		Assert.assertEquals("todolists", result);
+		Assert.assertEquals(PageEnum.HOME.getPage(), result);
 	}
 }

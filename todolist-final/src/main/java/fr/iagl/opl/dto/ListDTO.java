@@ -7,6 +7,8 @@ import fr.iagl.opl.entity.Task;
 
 public class ListDTO {
 	
+	public static final int MAX_TASK_TO_DISPLAY_ON_A_LINE = 5;
+	
 	private List<Task[]> listToDisplay;
 	
 	private String name;
