@@ -177,4 +177,50 @@ public class TaskControllerTest extends SpringIntegrationTest {
 		Assert.assertEquals(task, capturedTask.get(0));
 		Assert.assertTrue(capturedTask.get(0).isDone());
 	}
+	
+
+	
+	@Test
+	public void deleteTaskCallDeleteEntityOneTime(){
+		controller.deleteTask("1", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.times(1)).delete(Mockito.anyLong());
+	}
+	
+	@Test
+	public void deleteTaskRedirectToErrorPageWhenIdTaskIsNull(){
+		RedirectView res = controller.deleteTask(null, Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.never()).delete(Mockito.anyLong());
+		Assert.assertEquals(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void deleteTaskRedirectToErrorPageWhenIdTaskIsEmpty(){
+		RedirectView res = controller.deleteTask("", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.never()).delete(Mockito.anyLong());
+		Assert.assertEquals(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void deleteTaskRedirectToErrorPageWhenIdTaskIsNotLongValue(){
+		RedirectView res = controller.deleteTask("aze", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.never()).delete(Mockito.anyLong());
+		Assert.assertEquals(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void deleteTaskRedirectToHomePageWhenUpdateSuccess(){
+		RedirectView res = controller.deleteTask("1", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.times(1)).delete(Mockito.anyLong());
+		Assert.assertEquals(PageEnum.HOME.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void deleteTaskCallDeleteMethodeWithParameterId(){
+		ArgumentCaptor<Long> longCaptor = ArgumentCaptor.forClass(Long.class);
+		controller.deleteTask("1", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.times(1)).delete(longCaptor.capture());
+		List<Long> capturedTask = longCaptor.getAllValues();
+		Assert.assertEquals(1, capturedTask.size());
+		Assert.assertEquals(1, capturedTask.get(0).longValue());
+	}
 }

@@ -64,9 +64,11 @@ public class TaskController {
 	
 	@RequestMapping(value = "/delete/{taskId}", method = RequestMethod.GET)
 	public RedirectView deleteTask(@PathParam("taskId") String taskId, ModelMap model){
-		// attention ici idem pour le type du paramètre
-		// par contre ici tu peux simplement utiliser la mthode delete avec l'id en paramètre
-		throw new NotYetImplementedException();
+		if(StringUtils.isEmpty(taskId) || !StringUtils.isNumeric(taskId)){
+			return new RedirectView(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl());
+		}
+		taskRepository.delete(new Long(taskId));
+		return new RedirectView(PageEnum.HOME.getUrl());
 	}
 	
 	public void setTaskRepository(TaskRepository taskRepository) {
