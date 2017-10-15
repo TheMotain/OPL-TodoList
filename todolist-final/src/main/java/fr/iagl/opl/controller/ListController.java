@@ -1,18 +1,16 @@
 package fr.iagl.opl.controller;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 
 import fr.iagl.opl.entity.List;
-import fr.iagl.opl.entity.Task;
 import fr.iagl.opl.enums.ModelAttributeEnum;
 import fr.iagl.opl.enums.PageEnum;
 import fr.iagl.opl.repository.ListRepository;
@@ -37,7 +35,7 @@ public class ListController {
 	}
 	
 	@RequestMapping(value = "/delete/{name}", method = RequestMethod.GET)
-	public RedirectView supprimer(@PathParam("name") String name, ModelMap model) {
+	public RedirectView supprimer(@PathVariable("name") String name, ModelMap model) {
 		if(null != listRepository.findByName(name)){
 			listRepository.delete(name);
 			return new RedirectView(PageEnum.HOME.getUrl());

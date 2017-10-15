@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,7 +14,7 @@ import javax.persistence.ManyToOne;
 public class Task {
 	
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
@@ -31,7 +33,7 @@ public class Task {
 	
 	@Column(name = "done", nullable=false)
 	private boolean done;
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -79,5 +81,5 @@ public class Task {
 	public void setDone(boolean done) {
 		this.done = done;
 	}
-	
+
 }

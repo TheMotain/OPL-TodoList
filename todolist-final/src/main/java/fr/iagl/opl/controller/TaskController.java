@@ -5,10 +5,10 @@ import java.util.Date;
 import javax.websocket.server.PathParam;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +30,7 @@ public class TaskController {
 	private ListRepository listRepository;
 
 	@RequestMapping(value = "/createTask/{listname}", method = RequestMethod.POST)
-	public RedirectView createTask(@PathParam("listname") String listname,@RequestParam("name")String name, @RequestParam("description") String description, ModelMap model) {
+	public RedirectView createTask(@PathVariable("listname") String listname,@RequestParam("name")String name, @RequestParam("description") String description, ModelMap model) {
 		if(StringUtils.isEmpty(listname) || StringUtils.isEmpty(name)){
 			return new RedirectView(PageEnum.ERROR_WHEN_CREATING_TASK.getUrl());
 		}
@@ -49,7 +49,7 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value = "/done/{taskId}", method = RequestMethod.GET)
-	public RedirectView doneTask(@PathParam("taskId") String taskId, ModelMap model){
+	public RedirectView doneTask(@PathVariable("taskId") String taskId, ModelMap model){
 		if(StringUtils.isEmpty(taskId) || !StringUtils.isNumeric(taskId)){
 			return new RedirectView(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl());
 		}
@@ -62,8 +62,8 @@ public class TaskController {
 		return new RedirectView(PageEnum.HOME.getUrl());
 	}
 	
-	@RequestMapping(value = "/delete/{taskId}", method = RequestMethod.GET)
-	public RedirectView deleteTask(@PathParam("taskId") String taskId, ModelMap model){
+	@RequestMapping(value = "/deleteTask/{taskId}", method = RequestMethod.GET)
+	public RedirectView deleteTask(@PathVariable("taskId") String taskId, ModelMap model){
 		if(StringUtils.isEmpty(taskId) || !StringUtils.isNumeric(taskId)){
 			return new RedirectView(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl());
 		}
