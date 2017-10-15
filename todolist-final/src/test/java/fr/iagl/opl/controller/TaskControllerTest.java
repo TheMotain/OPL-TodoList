@@ -113,4 +113,68 @@ public class TaskControllerTest extends SpringIntegrationTest {
 		Assert.assertEquals(month, cal.get(Calendar.MONTH));
 		Assert.assertEquals(day, cal.get(Calendar.DAY_OF_MONTH));
 	}
+	
+	@Test
+	public void doneTaskCallSaveEntityOneTime(){
+		Mockito.when(taskRepository.findOne(Mockito.anyLong())).thenReturn(new Task());
+		controller.doneTask("1", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.times(1)).save((Task)Mockito.anyObject());
+	}
+	
+	@Test
+	public void doneTaskRedirectToErrorPageWhenIdTaskIsNull(){
+		RedirectView res = controller.doneTask(null, Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.never()).save((Task)Mockito.anyObject());
+		Assert.assertEquals(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void doneTaskRedirectToErrorPageWhenIdTaskIsEmpty(){
+		RedirectView res = controller.doneTask("", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.never()).save((Task)Mockito.anyObject());
+		Assert.assertEquals(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void doneTaskRedirectToErrorPageWhenIdTaskIsNotLongValue(){
+		RedirectView res = controller.doneTask("aze", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.never()).save((Task)Mockito.anyObject());
+		Assert.assertEquals(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void doneTaskRedirectToHomePageWhenUpdateSuccess(){
+		Mockito.when(taskRepository.findOne(Mockito.anyLong())).thenReturn(new Task());
+		RedirectView res = controller.doneTask("1", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.times(1)).save((Task)Mockito.anyObject());
+		Assert.assertEquals(PageEnum.HOME.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void doneTaskRetrieveTheOriginalEntityWithTaskId(){
+		controller.doneTask("1", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.times(1)).findOne(Mockito.anyLong());
+	}
+	
+	@Test
+	public void doneTaskRedirectToErrorUpdatePageWhenNotEntityFoundForTaskId(){
+		Mockito.when(taskRepository.findOne(Mockito.anyLong())).thenReturn(null);
+		RedirectView res = controller.doneTask("1", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.times(1)).findOne(Mockito.anyLong());	
+		Assert.assertEquals(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl(), res.getUrl());
+	}
+	
+	@Test
+	public void doneTaskUpdateBooleanDoneToTrueOfRetrieveEntityToPersist(){
+		Task task = new Task();
+		task.setDone(false);
+		Mockito.when(taskRepository.findOne(Mockito.anyLong())).thenReturn(task);
+		ArgumentCaptor<Task> taskCaptor = ArgumentCaptor.forClass(Task.class);
+		controller.doneTask("1", Mockito.mock(ModelMap.class));
+		Mockito.verify(taskRepository, Mockito.times(1)).save(taskCaptor.capture());
+		List<Task> capturedTask = taskCaptor.getAllValues();
+		Assert.assertEquals(1, capturedTask.size());
+		Assert.assertEquals(task, capturedTask.get(0));
+		Assert.assertTrue(capturedTask.get(0).isDone());
+	}
 }

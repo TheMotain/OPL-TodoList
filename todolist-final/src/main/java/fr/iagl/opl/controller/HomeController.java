@@ -48,6 +48,11 @@ public class HomeController {
 		return PageEnum.ERROR_WHEN_CREATING_TASK.getPage();
 	}
 
+	@RequestMapping(value = "/errorWhenUpdateTask", method = RequestMethod.GET)
+	public String redirectErrorWhenUpdateTask(ModelMap model){
+		return PageEnum.ERROR_WHEN_UPDATE_TASK.getPage();
+	}
+	
 	private java.util.List<ListDTO> transformListsToDTO(java.util.List<List> todolists) {
 		java.util.List<ListDTO> output = new ArrayList<ListDTO>();
 		for(List list : todolists){

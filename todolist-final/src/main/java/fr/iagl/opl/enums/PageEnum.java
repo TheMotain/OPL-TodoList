@@ -4,7 +4,9 @@ public enum PageEnum {
 	HOME("/","home"),
 	ERROR_LIST_ALREADY_EXISTS("/errorListAlreadyExists","errorListAlreadyExists"),
 	ERROR_LIST_NOT_EXISTS("/errorListNotExists","errorListNotExists"),
-	ERROR_WHEN_CREATING_TASK("/errorWhenCreatingTask","errorWhenCreatingTask");
+	ERROR_WHEN_CREATING_TASK("/errorWhenCreatingTask","errorWhenCreatingTask"),
+	ERROR_WHEN_UPDATE_TASK("/errorWhenUpdateTask", "errorWhenUpdateTask");
+	
 	
 	private String url;
 	private String page;

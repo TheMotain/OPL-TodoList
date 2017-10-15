@@ -50,10 +50,16 @@ public class TaskController {
 	
 	@RequestMapping(value = "/done/{taskId}", method = RequestMethod.GET)
 	public RedirectView doneTask(@PathParam("taskId") String taskId, ModelMap model){
-		// Attention ici l'id est en String il faudra le parse avant de pourvoir récupérer l'entité à mettre à jour
-		// utilise la méthode save du repository pour sauvegarder l'update
-		// attention donc à bien récupérer l'entité d'origine 
-		throw new NotYetImplementedException();
+		if(StringUtils.isEmpty(taskId) || !StringUtils.isNumeric(taskId)){
+			return new RedirectView(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl());
+		}
+		Task task = taskRepository.findOne(new Long(taskId));
+		if(task == null){
+			return new RedirectView(PageEnum.ERROR_WHEN_UPDATE_TASK.getUrl());
+		}
+		task.setDone(true);
+		taskRepository.save(task);
+		return new RedirectView(PageEnum.HOME.getUrl());
 	}
 	
 	@RequestMapping(value = "/delete/{taskId}", method = RequestMethod.GET)

@@ -170,4 +170,9 @@ public class HomeControllerTest extends SpringIntegrationTest{
 	public void redirectErrorWhenCreatingTaskTest(){
 		Assert.assertEquals(PageEnum.ERROR_WHEN_CREATING_TASK.getPage(), controller.redirectErrorListNotExists(Mockito.mock(ModelMap.class)));
 	}
+
+	@Test
+	public void redirectErrorWhenUpdateTaskTest(){
+		Assert.assertEquals(PageEnum.ERROR_WHEN_UPDATE_TASK.getPage(), controller.redirectErrorListNotExists(Mockito.mock(ModelMap.class)));
+	}
 }

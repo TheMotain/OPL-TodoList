@@ -60,16 +60,14 @@
 						</tr>
 					</c:forEach>
 					</tbody>
-					<tfoot>
-						<form method="post" action="/createTask/${currentList.name}">
-							<c:out value="Create Task : Name"/>
-	            			<input type="text" name="name"/>
-	            			<c:out value="Description"/>
-	            			<input type="text" name="description"/>
-	            			<input type="submit" value="Submit"/>
-						</form>
-					</tfoot>
 				</table>
+				<form method="post" action="/createTask/${currentList.name}">
+					<c:out value="Create Task : Name"/>
+	          			<input type="text" name="name"/>
+	          			<c:out value="Description"/>
+	          			<input type="text" name="description"/>
+	          			<input type="submit" value="Submit"/>
+				</form>
 			</c:forEach>
 		</div>
 
