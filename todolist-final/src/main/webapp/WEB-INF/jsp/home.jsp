@@ -31,13 +31,14 @@
 
 		<div class="starter-template">
 			<form:form method="POST" action="/createTodoList" modelAttribute="listForm">
-	            <form:label path="name">Créer todoListe : Name</form:label>
+	            <form:label path="name">Create todoListe : Name</form:label>
 	            <form:input path="name"/>
 	            <input type="submit" value="Submit"/>
 			</form:form>
 			<c:forEach var="currentList" items="${todolists}">
 				<c:out value="${currentList.name}"/>
-				<table class=".table-bordered">
+				<table class="table-bordered">
+					<tbody>
 					<c:forEach var="currentRow" items="${currentList.getFormatedListToDisplay()}">
 						<tr>
 							<c:forEach var="currentTask" items="${currentRow}">
@@ -48,12 +49,26 @@
 											<li><c:out value="Description : ${currentTask.description}"/></li>
 											<li><c:out value="Creation Date : ${currentTask.creationDate}"/></li>
 											<li><c:out value="Done : ${currentTask.done }"/></li>
+											<li>
+												<a href="/done/${currentTask.id}"><button type="button" class="btn btn-success">Done</button></a>
+												<a href="/delete/${currentTask.id}"><button type="button" class="btn btn-danger">delete</button></a>
+											</li>
 										</ul>
 									</c:if>
 								</td>
 							</c:forEach>
 						</tr>
 					</c:forEach>
+					</tbody>
+					<tfoot>
+						<form method="post" action="/createTask/${currentList.name}">
+							<c:out value="Create Task : Name"/>
+	            			<input type="text" name="name"/>
+	            			<c:out value="Description"/>
+	            			<input type="text" name="description"/>
+	            			<input type="submit" value="Submit"/>
+						</form>
+					</tfoot>
 				</table>
 			</c:forEach>
 		</div>
