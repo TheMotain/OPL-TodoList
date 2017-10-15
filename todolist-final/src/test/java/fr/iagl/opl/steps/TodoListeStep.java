@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.view.RedirectView;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -25,7 +26,7 @@ public class TodoListeStep extends SpringIntegrationTest {
 	
 	private String currentList;
 	
-	private String res;
+	private RedirectView res;
 	
 	private ModelMap model;
 	
@@ -64,7 +65,7 @@ public class TodoListeStep extends SpringIntegrationTest {
 	
 	@Then("^Je suis redirige sur la page erreur work existe deja$")
 	public void une_erreur_est_affichee_work_existe_deja() throws Throwable {
-		Assert.assertEquals(PageEnum.ERROR_LIST_ALREADY_EXISTS.getPage(), res);
+		Assert.assertEquals(PageEnum.ERROR_LIST_ALREADY_EXISTS.getUrl(), res.getUrl());
 	}
 
 	@Given("^Je veux creer une TODO liste avec le nom work(\\d+)$")
@@ -96,7 +97,7 @@ public class TodoListeStep extends SpringIntegrationTest {
 
 	@Then("^Je suis redirige vers la liste des todolists$")
 	public void je_suis_redirige_vers_la_liste_des_todolists() throws Throwable {
-		Assert.assertEquals(PageEnum.HOME.getPage(), res);
+		Assert.assertEquals(PageEnum.HOME.getUrl(), res.getUrl());
 	}
 	
 	@Given("^Je veux supprimer la TODO liste avec le nom (\\w+)$")

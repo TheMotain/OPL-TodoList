@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,6 +31,16 @@ public class HomeController {
 		model.addAttribute(ModelAttributeEnum.TODOLISTS.getAttribute(), transformListsToDTO(todolists));
 		model.addAttribute(ModelAttributeEnum.LIST_FORM.getAttribute(), new List());
 		return PageEnum.HOME.getPage();
+	}
+	
+	@RequestMapping(value = "/errorListAlreadyExists", method = RequestMethod.GET)
+	public String redirectErrorListAlreadyExists(ModelMap model){
+		return PageEnum.ERROR_LIST_ALREADY_EXISTS.getPage();
+	}
+	
+	@RequestMapping(value = "/errorListNotExists", method = RequestMethod.GET)
+	public String redirectErrorListNotExists(ModelMap model){
+		return PageEnum.ERROR_LIST_NOT_EXISTS.getPage();
 	}
 
 	private java.util.List<ListDTO> transformListsToDTO(java.util.List<List> todolists) {

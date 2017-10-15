@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.view.RedirectView;
 
 import fr.iagl.opl.SpringIntegrationTest;
 import fr.iagl.opl.entity.List;
@@ -54,8 +55,8 @@ public class ListControllerTest extends SpringIntegrationTest {
 		List entity = new List();
 		entity.setName("entity");
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(entity);
-		String result = controller.createList(entity, Mockito.mock(BindingResult.class), (ModelMap) Mockito.mock(ModelMap.class));
-		Assert.assertEquals(PageEnum.ERROR_LIST_ALREADY_EXISTS.getPage(), result);
+		RedirectView result = controller.createList(entity, Mockito.mock(BindingResult.class), (ModelMap) Mockito.mock(ModelMap.class));
+		Assert.assertEquals(PageEnum.ERROR_LIST_ALREADY_EXISTS.getUrl(), result.getUrl());
 	}
 	
 	@Test
@@ -63,8 +64,8 @@ public class ListControllerTest extends SpringIntegrationTest {
 		List entity = new List();
 		entity.setName("redirectAfterCreation");
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(null);
-		String result = controller.createList(entity, Mockito.mock(BindingResult.class), (ModelMap) Mockito.mock(ModelMap.class));
-		Assert.assertEquals(PageEnum.HOME.getPage(), result);
+		RedirectView result = controller.createList(entity, Mockito.mock(BindingResult.class), (ModelMap) Mockito.mock(ModelMap.class));
+		Assert.assertEquals(PageEnum.HOME.getUrl(), result.getUrl());
 	}
 	
 	@Test
@@ -98,15 +99,15 @@ public class ListControllerTest extends SpringIntegrationTest {
 	public void redirecToErrorPageWhenDeleteAndListNameNotExistsTest(){
 		String entity = "name";
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(null);
-		String result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
-		Assert.assertEquals(PageEnum.ERROR_LIST_NOT_EXISTS.getPage(), result);
+		RedirectView result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
+		Assert.assertEquals(PageEnum.ERROR_LIST_NOT_EXISTS.getUrl(), result.getUrl());
 	}
 	
 	@Test
 	public void redirecToTodoListsPageAfterSuppressionListTest(){
 		String entity = "redirectAfterSuppression";
 		Mockito.when(listRepository.findByName(Mockito.anyString())).thenReturn(new List());
-		String result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
-		Assert.assertEquals(PageEnum.HOME.getPage(), result);
+		RedirectView result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
+		Assert.assertEquals(PageEnum.HOME.getUrl(), result.getUrl());
 	}
 }

@@ -155,4 +155,14 @@ public class HomeControllerTest extends SpringIntegrationTest{
 		Mockito.verify(task3, Mockito.times(3)).getDescription();
 		Mockito.verify(task3, Mockito.times(3)).getName();
 	}
+	
+	@Test
+	public void redirectToErrorPageListAlreadyExistTest(){
+		Assert.assertEquals(PageEnum.ERROR_LIST_ALREADY_EXISTS.getPage(), controller.redirectErrorListAlreadyExists(Mockito.mock(ModelMap.class)));
+	}
+	
+	@Test
+	public void redirectToErrorPageListNotExistTest(){
+		Assert.assertEquals(PageEnum.ERROR_LIST_NOT_EXISTS.getPage(), controller.redirectErrorListNotExists(Mockito.mock(ModelMap.class)));
+	}
 }
