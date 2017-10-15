@@ -2,7 +2,8 @@ package fr.iagl.opl.enums;
 
 public enum ModelAttributeEnum {
 	LIST_FORM("listForm"),
-	TODOLISTS("todolists");
+	TODOLISTS("todolists"),
+	TASK_FORM("taskForm");
 	
 	private String attribute;
 	

@@ -7,4 +7,5 @@ import fr.iagl.opl.entity.Task;
 
 public interface TaskRepository extends CrudRepository<Task, Long>{
 	Task findTaskByNameAndList(String name, List list);
+	Task findTaskById(Long id);
 }
