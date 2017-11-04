@@ -42,6 +42,12 @@ public class ListController {
 		}
 		return new RedirectView(PageEnum.ERROR_LIST_NOT_EXISTS.getUrl());
 	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public RedirectView supprimerTout(ModelMap model) {
+		listRepository.deleteAll();
+		return new RedirectView(PageEnum.HOME.getUrl());
+	}
 
 	public void setListRepository(ListRepository listRepository) {
 		this.listRepository = listRepository;

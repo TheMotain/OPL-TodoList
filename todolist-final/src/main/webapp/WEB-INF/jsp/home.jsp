@@ -20,13 +20,13 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-inverse">
+	<div class="navbar navbar-inverse">
 		<div class="container">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/">TodoList</a>
 			</div>
 		</div>
-	</nav>
+	</div>
 
 	<div class="container">
 
@@ -45,7 +45,7 @@
 			</form:form>
 			<c:forEach var="currentList" items="${todolists}">
 			<div class="panel panel-primary">
-				<div class="panel-heading">
+				<div class="panel-heading" id="${currentList.name}">
 					<c:out value="${currentList.name}"/>
 					<a href="/delete/${currentList.name}"><button type="button" class="btn btn-danger">delete</button></a>
 				</div>
@@ -55,8 +55,8 @@
 						<c:forEach var="currentRow" items="${currentList.getFormatedListToDisplay()}">
 							<tr>
 								<c:forEach var="currentTask" items="${currentRow}">
-									<td>
-										<c:if test="${currentTask ne null}">
+									<c:if test="${currentTask ne null}">
+										<td id="${currentTask.id}">
 											<ul>
 												<li><c:out value="Task : ${currentTask.name}"/></li>
 												<li><c:out value="Description : ${currentTask.description}"/></li>
@@ -69,8 +69,8 @@
 													<a href="/deleteTask/${currentTask.id}"><button type="button" class="btn btn-danger">delete</button></a>
 												</li>
 											</ul>
-										</c:if>
-									</td>
+										</td>
+									</c:if>
 								</c:forEach>
 							</tr>
 						</c:forEach>

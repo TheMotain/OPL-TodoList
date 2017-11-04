@@ -110,4 +110,16 @@ public class ListControllerTest extends SpringIntegrationTest {
 		RedirectView result = controller.supprimer(entity, (ModelMap) Mockito.mock(ModelMap.class));
 		Assert.assertEquals(PageEnum.HOME.getUrl(), result.getUrl());
 	}
+	
+	@Test
+	public void deleteAllTest(){
+		controller.supprimerTout(null);
+		Mockito.verify(listRepository, Mockito.times(1)).deleteAll();
+	}
+	
+	@Test
+	public void deleteAllRedirectHomeTest(){
+		RedirectView result = controller.supprimerTout(null);
+		Assert.assertEquals(PageEnum.HOME.getUrl(), result.getUrl());
+	}
 }
